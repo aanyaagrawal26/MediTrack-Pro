@@ -1,0 +1,104 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #f3f6fb;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background:
+    radial-gradient(1200px 600px at 100% -10%, #e7f0ff 0%, transparent 60%),
+    radial-gradient(900px 500px at -10% 110%, #eaf7ef 0%, transparent 55%),
+    var(--bg);
+  color: #0f172a;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Dark theme surface (Tailwind `dark` class on <html>). */
+.dark body {
+  background:
+    radial-gradient(1200px 600px at 100% -10%, #16203a 0%, transparent 60%),
+    radial-gradient(900px 500px at -10% 110%, #0e2018 0%, transparent 55%),
+    #0b1120;
+  color: #e2e8f0;
+}
+
+/* Reusable component classes layered on top of Tailwind utilities. */
+@layer components {
+  .card {
+    @apply rounded-2xl border border-slate-200/80 bg-white/90 shadow-card backdrop-blur
+      dark:border-slate-700/60 dark:bg-slate-900/70;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition
+      focus:outline-none focus:ring-2 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50
+      dark:focus:ring-offset-slate-900;
+  }
+  .btn-primary {
+    @apply btn bg-brand-600 text-white hover:bg-brand-700 focus:ring-brand-400;
+  }
+  .btn-ghost {
+    @apply btn border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 focus:ring-slate-300
+      dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700;
+  }
+  .btn-danger {
+    @apply btn bg-red-600 text-white hover:bg-red-700 focus:ring-red-400;
+  }
+  .btn-success {
+    @apply btn bg-green-600 text-white hover:bg-green-700 focus:ring-green-400;
+  }
+
+  .input {
+    @apply w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900
+      placeholder:text-slate-400 focus:border-brand-400 focus:outline-none focus:ring-2 focus:ring-brand-100
+      dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-500
+      dark:focus:ring-brand-500/30;
+  }
+  .label {
+    @apply mb-1 block text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400;
+  }
+
+  .badge {
+    @apply inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-semibold;
+  }
+
+  /* Section heading helper */
+  .page-title {
+    @apply text-2xl font-bold text-slate-900 dark:text-white;
+  }
+}
+
+/* Hide number input spinners for a cleaner clinical look. */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Faux-barcode rendering used by the barcode verification UI. */
+.barcode {
+  background-image: repeating-linear-gradient(
+    90deg,
+    #0f172a 0,
+    #0f172a var(--w, 2px),
+    transparent var(--w, 2px),
+    transparent calc(var(--w, 2px) + var(--g, 2px))
+  );
+}
+.dark .barcode {
+  background-image: repeating-linear-gradient(
+    90deg,
+    #e2e8f0 0,
+    #e2e8f0 var(--w, 2px),
+    transparent var(--w, 2px),
+    transparent calc(var(--w, 2px) + var(--g, 2px))
+  );
+}

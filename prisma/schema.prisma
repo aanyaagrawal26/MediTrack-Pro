@@ -1,0 +1,125 @@
+// =============================================================================
+// MediTrack Pro — Prisma schema (PostgreSQL)
+// -----------------------------------------------------------------------------
+// The running demo uses localStorage (see src/lib/store.ts) so you can show the
+// project with ZERO database setup. This schema mirrors that exact data model,
+// so when you are ready to move to a real DB you only have to swap the store
+// implementation for Prisma queries — the shapes already line up.
+// =============================================================================
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ----- Enums ------------------------------------------------------------------
+
+enum Role {
+  ADMIN
+  NURSE
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
+
+// Lifecycle of a single scheduled dose (one row per medicine, per time, per day)
+enum DoseStatus {
+  PENDING // due (or upcoming) and not yet confirmed
+  GIVEN   // given on time
+  DELAYED // given, but after the scheduled time + grace window
+  MISSED  // explicitly marked as not administered
+}
+
+// ----- Users (Admins & Nurses) ------------------------------------------------
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  // Human-friendly login id, e.g. "admin01" or "nurse-amelia"
+  username  String   @unique
+  // NOTE: hash this in a real deployment (bcrypt/argon2). Plaintext for demo only.
+  password  String
+  role      Role     @default(NURSE)
+  // Ward a nurse is assigned to (null for admins / all wards)
+  ward      String?
+  createdAt DateTime @default(now())
+
+  // A nurse "owns" the dose records she confirms
+  doses     Dose[]   @relation("ConfirmedByNurse")
+}
+
+// ----- Patients ---------------------------------------------------------------
+
+model Patient {
+  id        String    @id @default(cuid())
+  name      String
+  age       Int
+  gender    Gender
+  ward      String
+  bedNumber String
+  condition String // disease / diagnosis
+  doctor    String
+  createdAt DateTime  @default(now())
+
+  medicines Medicine[]
+  doses     Dose[]
+}
+
+// ----- Medicine schedules -----------------------------------------------------
+
+model Medicine {
+  id        String   @id @default(cuid())
+  patientId String
+  patient   Patient  @relation(fields: [patientId], references: [id], onDelete: Cascade)
+
+  name      String
+  dosage    String // e.g. "500 mg", "2 tablets"
+  frequency String // human label, e.g. "Twice daily"
+  // Daily reminder times in "HH:mm" 24h format. Multiple supported per medicine.
+  times     String[]
+  startDate DateTime
+  endDate   DateTime
+  notes     String?
+  createdAt DateTime @default(now())
+
+  doses     Dose[]
+}
+
+// ----- Dose events (the heart of the reminder system) -------------------------
+// One Dose = a single expected administration at a specific date+time.
+// These are generated from Medicine.times for each day in the active range.
+
+model Dose {
+  id           String     @id @default(cuid())
+
+  medicineId   String
+  medicine     Medicine   @relation(fields: [medicineId], references: [id], onDelete: Cascade)
+
+  patientId    String
+  patient      Patient    @relation(fields: [patientId], references: [id], onDelete: Cascade)
+
+  // The exact moment this dose is due
+  scheduledAt  DateTime
+  // When the nurse actually confirmed administration (null until confirmed)
+  givenAt      DateTime?
+
+  status       DoseStatus @default(PENDING)
+
+  nurseId      String?
+  nurse        User?      @relation("ConfirmedByNurse", fields: [nurseId], references: [id])
+  notes        String?
+
+  createdAt    DateTime   @default(now())
+
+  // Prevents duplicate dose rows for the same medicine + time
+  @@unique([medicineId, scheduledAt])
+  @@index([status])
+  @@index([scheduledAt])
+}

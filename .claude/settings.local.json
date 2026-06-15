@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install *)",
+      "Bash(sed -i '' 's/h-4\\\\.5 w-4\\\\.5/h-4 w-4/g; s/h-4\\\\.5/h-4/g; s/w-4\\\\.5/w-4/g' src/components/ReminderEngine.tsx src/components/AppShell.tsx)",
+      "Bash(npm audit *)",
+      "Bash(npm run *)",
+      "Bash(perl -pi -e ' *)",
+      "Bash(lsof -ti:3000)",
+      "Bash(xargs kill -9)",
+      "Bash(echo \"build exit: $?\")",
+      "Read(//tmp/**)",
+      "Bash(rm -rf /tmp/seedcheck)",
+      "Bash(npx tsc *)",
+      "Bash(node -e ' *)",
+      "Bash(rm -rf /tmp/seedcheck && grep -n \"Sample demo data\" README.md)"
+    ]
+  }
+}
