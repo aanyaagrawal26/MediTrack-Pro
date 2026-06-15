@@ -412,5 +412,5 @@ upgrade to the latest Next.js major and hash all passwords.
 
 ## 📜 License
 
-MIT — free to use for your college project, demos, and learning. Built as an
+NOT free to use for your college project, demos, and learning. Built as an
 educational patient-safety reference app.
