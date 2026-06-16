@@ -7,7 +7,7 @@ import { EcgLine, Particles, Reveal } from "./primitives";
 export function FinalCTA() {
   return (
     <section className="relative overflow-hidden bg-gradient-to-br from-brand-600 via-indigo-700 to-slate-900 py-28 text-white">
-      <Particles count={24} />
+      <Particles count={24} onDark />
       <div className="absolute -left-24 top-10 h-80 w-80 rounded-full bg-emerald-400/20 blur-[120px]" />
       <div className="absolute -right-24 bottom-10 h-80 w-80 rounded-full bg-sky-400/20 blur-[120px]" />
       <EcgLine className="absolute left-0 right-0 top-8 mx-auto h-10 max-w-3xl px-4 opacity-40" />

@@ -155,7 +155,17 @@ export function GradientText({ children, className }: { children: React.ReactNod
 
 // ----- Particle field (subtle floating dots) ---------------------------------
 
-export function Particles({ count = 22, className }: { count?: number; className?: string }) {
+export function Particles({
+  count = 22,
+  className,
+  onDark = false,
+}: {
+  count?: number;
+  className?: string;
+  // Set true on permanently-dark gradient bands (metrics / CTA) so the dots
+  // stay white. Otherwise they adapt: slate on light, white on dark.
+  onDark?: boolean;
+}) {
   const dots = Array.from({ length: count }, (_, i) => {
     const left = seeded(i + 1) * 100;
     const top = seeded(i + 99) * 100;
@@ -171,7 +181,10 @@ export function Particles({ count = 22, className }: { count?: number; className
       {dots.map((d) => (
         <motion.span
           key={d.i}
-          className="absolute rounded-full bg-white/40"
+          className={clsx(
+            "absolute rounded-full",
+            onDark ? "bg-white/40" : "bg-brand-400/40 dark:bg-white/40"
+          )}
           style={{ left: `${d.left}%`, top: `${d.top}%`, width: d.size, height: d.size }}
           animate={{ y: [0, -d.drift, 0], opacity: [0.15, 0.7, 0.15] }}
           transition={{ duration: d.dur, delay: d.delay, repeat: Infinity, ease: "easeInOut" }}

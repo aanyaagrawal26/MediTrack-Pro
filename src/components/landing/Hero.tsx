@@ -19,27 +19,37 @@ import { EcgLine, Floaty, GradientText, Particles } from "./primitives";
 
 export function Hero() {
   return (
-    <section className="relative isolate min-h-screen overflow-hidden bg-[#070b18] pb-24 pt-32 text-white">
-      {/* Animated gradient background */}
+    <section className="relative isolate min-h-screen overflow-hidden bg-gradient-to-b from-brand-50 via-white to-cyan-50 pb-24 pt-32 text-slate-900 dark:from-[#070b18] dark:via-[#070b18] dark:to-[#070b18] dark:text-white">
+      {/* Animated gradient background (soft tints in light, deep glow in dark) */}
       <div className="absolute inset-0 -z-10">
         <motion.div
-          className="absolute -top-40 left-1/4 h-[42rem] w-[42rem] rounded-full bg-brand-600/30 blur-[120px]"
+          className="absolute -top-40 left-1/4 h-[42rem] w-[42rem] rounded-full bg-brand-400/20 blur-[120px] dark:bg-brand-600/30"
           animate={{ x: [0, 60, 0], y: [0, 40, 0] }}
           transition={{ duration: 16, repeat: Infinity, ease: "easeInOut" }}
         />
         <motion.div
-          className="absolute -bottom-40 right-1/4 h-[40rem] w-[40rem] rounded-full bg-indigo-600/30 blur-[120px]"
+          className="absolute -bottom-40 right-1/4 h-[40rem] w-[40rem] rounded-full bg-indigo-400/20 blur-[120px] dark:bg-indigo-600/30"
           animate={{ x: [0, -50, 0], y: [0, -30, 0] }}
           transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
         />
         <motion.div
-          className="absolute left-1/2 top-1/3 h-[30rem] w-[30rem] -translate-x-1/2 rounded-full bg-emerald-500/20 blur-[120px]"
+          className="absolute left-1/2 top-1/3 h-[30rem] w-[30rem] -translate-x-1/2 rounded-full bg-emerald-300/20 blur-[120px] dark:bg-emerald-500/20"
           animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0.8, 0.5] }}
           transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
         />
-        {/* grid overlay */}
+        {/* grid overlay — very light on light theme, faint white on dark */}
         <div
-          className="absolute inset-0 opacity-[0.07]"
+          className="absolute inset-0 opacity-[0.5] dark:hidden"
+          style={{
+            backgroundImage:
+              "linear-gradient(to right, #cbd5e1 1px, transparent 1px), linear-gradient(to bottom, #cbd5e1 1px, transparent 1px)",
+            backgroundSize: "44px 44px",
+            maskImage: "radial-gradient(ellipse at center, black, transparent 75%)",
+            WebkitMaskImage: "radial-gradient(ellipse at center, black, transparent 75%)",
+          }}
+        />
+        <div
+          className="absolute inset-0 hidden opacity-[0.07] dark:block"
           style={{
             backgroundImage:
               "linear-gradient(to right, #fff 1px, transparent 1px), linear-gradient(to bottom, #fff 1px, transparent 1px)",
@@ -58,9 +68,9 @@ export function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="mx-auto mb-6 flex w-fit items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-1.5 text-sm font-medium text-white/80 backdrop-blur"
+          className="mx-auto mb-6 flex w-fit items-center gap-2 rounded-full border border-slate-200 bg-white/70 px-4 py-1.5 text-sm font-medium text-slate-600 shadow-sm backdrop-blur dark:border-white/15 dark:bg-white/5 dark:text-white/80 dark:shadow-none"
         >
-          <Sparkles className="h-4 w-4 text-brand-300" />
+          <Sparkles className="h-4 w-4 text-brand-500 dark:text-brand-300" />
           AI-Powered Hospital Medication Safety Platform
         </motion.div>
 
@@ -78,7 +88,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.12 }}
-          className="mx-auto mt-5 max-w-2xl text-center text-lg text-white/70 sm:text-xl"
+          className="mx-auto mt-5 max-w-2xl text-center text-lg text-slate-600 dark:text-white/70 sm:text-xl"
         >
           AI-Powered Hospital Medication Safety Platform
         </motion.p>
@@ -90,9 +100,9 @@ export function Hero() {
           transition={{ duration: 0.7, delay: 0.18 }}
           className="mx-auto mt-6 flex max-w-2xl flex-wrap items-center justify-center gap-x-3 gap-y-1 text-center text-base font-semibold sm:text-lg"
         >
-          <span className="text-brand-300">Ensuring Every Dose.</span>
-          <span className="text-sky-300">Protecting Every Patient.</span>
-          <span className="text-emerald-300">Empowering Every Nurse.</span>
+          <span className="text-brand-600 dark:text-brand-300">Ensuring Every Dose.</span>
+          <span className="text-sky-600 dark:text-sky-300">Protecting Every Patient.</span>
+          <span className="text-emerald-600 dark:text-emerald-300">Empowering Every Nurse.</span>
         </motion.div>
 
         {/* Buttons */}
@@ -111,14 +121,14 @@ export function Hero() {
           </Link>
           <a
             href="#product"
-            className="inline-flex items-center gap-2 rounded-2xl border border-white/20 bg-white/5 px-6 py-3.5 text-base font-bold text-white backdrop-blur transition hover:bg-white/10"
+            className="inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-white px-6 py-3.5 text-base font-bold text-slate-700 shadow-sm backdrop-blur transition hover:bg-slate-50 dark:border-white/20 dark:bg-white/5 dark:text-white dark:shadow-none dark:hover:bg-white/10"
           >
             <PlayCircle className="h-5 w-5" />
             Watch Product Tour
           </a>
           <a
             href="#how"
-            className="inline-flex items-center gap-2 rounded-2xl px-6 py-3.5 text-base font-bold text-white/80 transition hover:text-white"
+            className="inline-flex items-center gap-2 rounded-2xl px-6 py-3.5 text-base font-bold text-slate-600 transition hover:text-slate-900 dark:text-white/80 dark:hover:text-white"
           >
             Explore Features
           </a>
@@ -146,7 +156,7 @@ export function Hero() {
 
       {/* ECG heartbeat strip across the bottom */}
       <div className="absolute bottom-0 left-0 right-0 z-10">
-        <div className="mx-auto flex max-w-6xl items-center gap-3 px-4 pb-4 text-emerald-300/80">
+        <div className="mx-auto flex max-w-6xl items-center gap-3 px-4 pb-4 text-emerald-600 dark:text-emerald-300/80">
           <Heart className="h-4 w-4 animate-pulse" />
           <EcgLine className="h-10 flex-1" />
           <span className="hidden text-xs font-semibold tracking-wider sm:block">LIVE · 72 BPM</span>
@@ -172,18 +182,18 @@ function SatelliteCard({
   pulse?: boolean;
 }) {
   const tones = {
-    emerald: "from-emerald-500/20 text-emerald-300 ring-emerald-400/30",
-    sky: "from-sky-500/20 text-sky-300 ring-sky-400/30",
-    red: "from-red-500/20 text-red-300 ring-red-400/30",
+    emerald: "from-emerald-500/20 text-emerald-600 ring-emerald-400/30 dark:text-emerald-300",
+    sky: "from-sky-500/20 text-sky-600 ring-sky-400/30 dark:text-sky-300",
+    red: "from-red-500/20 text-red-600 ring-red-400/30 dark:text-red-300",
   };
   return (
-    <div className="flex w-56 items-center gap-3 rounded-2xl border border-white/15 bg-white/10 p-3 shadow-pop backdrop-blur-xl">
+    <div className="flex w-56 items-center gap-3 rounded-2xl border border-slate-200 bg-white/80 p-3 shadow-pop backdrop-blur-xl dark:border-white/15 dark:bg-white/10">
       <span className={`grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-b ring-1 ${tones[tone]} ${pulse ? "animate-pulseRing" : ""}`}>
         {icon}
       </span>
       <div className="min-w-0">
-        <p className="truncate text-sm font-bold text-white">{title}</p>
-        <p className="truncate text-xs text-white/60">{sub}</p>
+        <p className="truncate text-sm font-bold text-slate-900 dark:text-white">{title}</p>
+        <p className="truncate text-xs text-slate-500 dark:text-white/60">{sub}</p>
       </div>
     </div>
   );
@@ -191,22 +201,22 @@ function SatelliteCard({
 
 function NurseCard() {
   return (
-    <div className="flex w-60 items-center gap-3 rounded-2xl border border-white/15 bg-white/10 p-3 shadow-pop backdrop-blur-xl">
+    <div className="flex w-60 items-center gap-3 rounded-2xl border border-slate-200 bg-white/80 p-3 shadow-pop backdrop-blur-xl dark:border-white/15 dark:bg-white/10">
       <span className="grid h-10 w-10 place-items-center rounded-full bg-gradient-to-br from-emerald-400 to-teal-500 text-sm font-bold text-white">
         AC
       </span>
       <div className="min-w-0 flex-1">
-        <p className="truncate text-sm font-bold text-white">Amelia Carter</p>
-        <p className="flex items-center gap-1 truncate text-xs text-emerald-300">
+        <p className="truncate text-sm font-bold text-slate-900 dark:text-white">Amelia Carter</p>
+        <p className="flex items-center gap-1 truncate text-xs text-emerald-600 dark:text-emerald-300">
           <CheckCircle2 className="h-3.5 w-3.5" /> Verified dose · on time
         </p>
       </div>
-      <Syringe className="h-4 w-4 text-white/40" />
+      <Syringe className="h-4 w-4 text-slate-400 dark:text-white/40" />
     </div>
   );
 }
 
-// ---- The 3D dashboard mockup ------------------------------------------------
+// ---- The 3D dashboard mockup (kept dark in both modes — a "device" preview) --
 
 function DashboardPreview() {
   return (
@@ -219,7 +229,7 @@ function DashboardPreview() {
     >
       <Floaty amount={10} duration={9}>
         <div
-          className="overflow-hidden rounded-3xl border border-white/15 bg-slate-900/70 shadow-[0_40px_120px_rgba(0,0,0,0.6)] backdrop-blur-xl"
+          className="overflow-hidden rounded-3xl border border-slate-700/50 bg-slate-900/90 shadow-[0_40px_120px_rgba(15,23,42,0.35)] backdrop-blur-xl dark:border-white/15 dark:bg-slate-900/70 dark:shadow-[0_40px_120px_rgba(0,0,0,0.6)]"
           style={{ transform: "rotateY(-6deg)" }}
         >
           {/* window chrome */}
@@ -370,7 +380,7 @@ function NetworkViz() {
     [0, 1], [1, 2], [2, 3], [3, 4], [4, 5], [2, 8], [6, 7], [7, 8], [8, 9], [9, 10], [10, 11], [3, 8], [4, 10],
   ];
   return (
-    <svg className="absolute inset-0 -z-10 h-full w-full opacity-40" preserveAspectRatio="none" aria-hidden>
+    <svg className="absolute inset-0 -z-10 h-full w-full opacity-30 dark:opacity-40" preserveAspectRatio="none" aria-hidden>
       {links.map(([a, b], i) => (
         <motion.line
           key={i}
@@ -391,7 +401,7 @@ function NetworkViz() {
           cx={`${x}%`}
           cy={`${y}%`}
           r={2.5}
-          fill="#7dd3fc"
+          fill="#38bdf8"
           animate={{ opacity: [0.3, 1, 0.3] }}
           transition={{ duration: 3 + (i % 4), repeat: Infinity, ease: "easeInOut" }}
         />

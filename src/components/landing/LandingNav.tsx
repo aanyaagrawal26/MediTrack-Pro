@@ -35,7 +35,7 @@ export function LandingNav() {
       <div
         className={`mx-auto flex max-w-6xl items-center justify-between rounded-2xl border px-4 py-2.5 transition-all duration-300 sm:px-5 ${
           scrolled
-            ? "border-white/10 bg-slate-950/70 shadow-pop backdrop-blur-xl"
+            ? "border-slate-200 bg-white/80 shadow-pop backdrop-blur-xl dark:border-white/10 dark:bg-slate-950/70"
             : "border-transparent bg-transparent"
         }`}
       >
@@ -43,8 +43,8 @@ export function LandingNav() {
           <span className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-brand-500 to-indigo-600 text-white shadow-lg">
             <Pill className="h-5 w-5" />
           </span>
-          <span className="text-lg font-extrabold tracking-tight text-white">
-            MediTrack <span className="text-brand-400">Pro</span>
+          <span className="text-lg font-extrabold tracking-tight text-slate-900 dark:text-white">
+            MediTrack <span className="text-brand-600 dark:text-brand-400">Pro</span>
           </span>
         </Link>
 
@@ -53,7 +53,7 @@ export function LandingNav() {
             <a
               key={l.href}
               href={l.href}
-              className="rounded-lg px-3 py-1.5 text-sm font-medium text-white/70 transition hover:bg-white/10 hover:text-white"
+              className="rounded-lg px-3 py-1.5 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900 dark:text-white/70 dark:hover:bg-white/10 dark:hover:text-white"
             >
               {l.label}
             </a>
@@ -66,7 +66,7 @@ export function LandingNav() {
           </div>
           <Link
             href="/login"
-            className="group inline-flex items-center gap-1.5 rounded-xl bg-white px-4 py-2 text-sm font-bold text-slate-900 shadow-lg transition hover:bg-brand-50"
+            className="group inline-flex items-center gap-1.5 rounded-xl bg-brand-600 px-4 py-2 text-sm font-bold text-white shadow-lg transition hover:bg-brand-700 dark:bg-white dark:text-slate-900 dark:hover:bg-brand-50"
           >
             Enter Platform
             <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" />
