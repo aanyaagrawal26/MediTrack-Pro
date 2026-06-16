@@ -11,6 +11,12 @@ body {
   height: 100%;
 }
 
+/* Smooth anchor scrolling on the landing page, offset for the fixed nav. */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 90px;
+}
+
 body {
   background:
     radial-gradient(1200px 600px at 100% -10%, #e7f0ff 0%, transparent 60%),

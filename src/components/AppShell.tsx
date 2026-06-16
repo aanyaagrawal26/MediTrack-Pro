@@ -78,7 +78,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
-    if (!loading && !user) router.replace("/");
+    if (!loading && !user) router.replace("/login");
   }, [loading, user, router]);
 
   if (loading || !user) {
